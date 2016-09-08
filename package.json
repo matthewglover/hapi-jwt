@@ -1,0 +1,37 @@
+{
+  "name": "@matthewglover/hapi-jwt",
+  "version": "0.1.0",
+  "description": "## What A hapi authentication plugin using Json Web Tokens.",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava --verbose './test/**/*.test.js'",
+    "precommit": "npm run lint && nyc --reporter=lcov npm test && npm run coverage",
+    "lint": "eslint './+(lib|util|test_helpers|test|integration)/**/*.js'",
+    "coverage": "nyc check-coverage --lines 100, --functions 100, --branches 100",
+    "integration": "node ./integration"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matthewglover/hapi-jwt.git"
+  },
+  "author": "Matt Glover (https://github.com/matthewglover)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/matthewglover/hapi-jwt/issues"
+  },
+  "homepage": "https://github.com/matthewglover/hapi-jwt#readme",
+  "devDependencies": {
+    "@matthewglover/hapi-oauth": "^0.1.0",
+    "@matthewglover/hapi-wrapper": "^0.2.0",
+    "ava": "^0.16.0",
+    "babel-eslint": "^6.1.2",
+    "coveralls": "^2.11.12",
+    "eslint": "^3.4.0",
+    "eslint-config-airbnb": "^11.0.0",
+    "eslint-plugin-import": "^1.14.0",
+    "eslint-plugin-jsx-a11y": "^2.2.1",
+    "eslint-plugin-react": "^6.2.0",
+    "husky": "^0.11.7",
+    "nyc": "^8.1.0"
+  }
+}
