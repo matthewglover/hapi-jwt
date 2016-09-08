@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/matthewglover/hapi-jwt.svg?branch=master)](https://travis-ci.org/matthewglover/hapi-jwt) [![Coverage Status](https://coveralls.io/repos/github/matthewglover/hapi-jwt/badge.svg?branch=master)](https://coveralls.io/github/matthewglover/hapi-jwt?branch=master)
+
 # hapi-jwt
 
 ## What
