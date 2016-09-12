@@ -4,7 +4,7 @@
   "description": "## What A hapi authentication plugin using Json Web Tokens.",
   "main": "index.js",
   "scripts": {
-    "test": "ava --verbose './test/**/*.test.js'",
+    "test": "NODE_ENV=test ava --verbose './test/**/*.test.js'",
     "precommit": "npm run lint && nyc --reporter=lcov npm test && npm run coverage",
     "lint": "eslint './+(lib|util|test_helpers|test|integration)/**/*.js'",
     "coverage": "nyc check-coverage --lines 100, --functions 100, --branches 100",
