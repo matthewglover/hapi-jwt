@@ -40,9 +40,7 @@ const failingCredentialsOptions =
     testOptions,
     { validateCredentials: () => Promise.reject(new Error('Invalid credentials')) });
 
-const testCredentials = {
-  name: 'matt',
-};
+const testCredentials = { name: 'matt' };
 
 test('jwtScheme allows access if valid token provided', async t => {
   const validToken =
