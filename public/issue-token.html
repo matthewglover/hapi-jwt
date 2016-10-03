@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <a id="verifyTokenLink" href="#">verify token</a><br><br>
+    <a id="accessProtectedLinkFail" href="#">access protected without jwt</a><br><br>
+    <a id="accessProtectedLinkSuccess" href="#">access protected with jwt</a>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+      const params =
+        window.location.search
+        .match(/[^?&]+/g)
+        .map(s => s.split('='))
+        .reduce((acc, [k, v]) => Object.assign(acc, { [k]: v }), {});
+
+      document.getElementById('verifyTokenLink').addEventListener('click', () => {
+        axios
+        .get(`/verify-token?jwt=${params.jwt}`)
+        .then(({ data }) => data)
+        .then(console.log.bind(console));
+      });
+
+      document.getElementById('accessProtectedLinkFail').addEventListener('click', () => {
+        axios
+        .get(`/protected`)
+        .then(({ data }) => data)
+        .then(data => console.log('succes:', data))
+        .catch(err => console.log('error:', err));
+      });
+
+      document.getElementById('accessProtectedLinkSuccess').addEventListener('click', () => {
+        axios
+        .get(`/protected`, { headers: { Authorization: `Bearer ${params.jwt}` } })
+        .then(({ data }) => data)
+        .then(data => console.log('succes:', data))
+        .catch(err => console.log('error:', err));
+      });
+
+
+    </script>
+  </body>
+</html>
