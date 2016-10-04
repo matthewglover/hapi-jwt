@@ -1,7 +1,7 @@
 import test from 'ava';
 import signJWT from '../../util/sign_jwt';
 
-test('signJWT creates a JSON Web Token from a secret, options object and payload', async t => {
+test('signJWT creates a JSON Web Token from a secret, options object and payload', async (t) => {
   const actual =
     await signJWT({ algorithm: 'HS256' }, 'my-secret', { name: 'matt', iat: 12345 });
   const expected =

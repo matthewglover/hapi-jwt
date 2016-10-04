@@ -16,16 +16,16 @@ const options = {
 };
 
 // eslint-disable-next-line max-len
-test('plugin loads without error provided opts.jwtSecret and opts.issueTokenPath are specified', async t => {
+test('plugin loads without error provided opts.jwtSecret and opts.issueTokenPath are specified', async (t) => {
   t.true(await server([{ register: HapiJwt, options }]) instanceof Hapi.Server);
 });
 
 // eslint-disable-next-line max-len
-test('plugin throws error if opts.jwtSecret not specified', async t => {
+test('plugin throws error if opts.jwtSecret not specified', async (t) => {
   t.throws(server([{ register: HapiJwt, options: omit(['jwtSecret'], options) }]));
 });
 
 // eslint-disable-next-line max-len
-test('plugin throws error if opts.issueTokenPath not specified', async t => {
+test('plugin throws error if opts.issueTokenPath not specified', async (t) => {
   t.throws(server([{ register: HapiJwt, options: omit(['issueTokenPath'], options) }]));
 });

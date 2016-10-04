@@ -6,7 +6,7 @@ import signJWT from '../../util/sign_jwt';
 import verifyTokenRoute from '../../lib/verify_token_route';
 
 
-const delay = (ms) =>
+const delay = ms =>
   new Promise(resolve => setTimeout(resolve, ms));
 
 const testServer = routes =>
@@ -26,7 +26,7 @@ const tokenOptions = {
   jwtSecret: 'jwt-secret',
 };
 
-test('verifyTokenRoute returns jwt payload if jwt is a valid token', async t => {
+test('verifyTokenRoute returns jwt payload if jwt is a valid token', async (t) => {
   const validToken =
     await signJWT({ algorithm: 'HS256' }, 'jwt-secret', payload);
 
@@ -40,7 +40,7 @@ test('verifyTokenRoute returns jwt payload if jwt is a valid token', async t => 
   t.deepEqual(omit('iat', reply.result), payload);
 });
 
-test('verifyTokenRoute returns Boom error if jwt is an invalidly signed token', async t => {
+test('verifyTokenRoute returns Boom error if jwt is an invalidly signed token', async (t) => {
   const invalidToken =
     await signJWT({ algorithm: 'HS256' }, 'incorrect-secret', payload);
 
@@ -56,7 +56,7 @@ test('verifyTokenRoute returns Boom error if jwt is an invalidly signed token', 
     { statusCode: 400, error: 'Bad Request', message: 'invalid signature' });
 });
 
-test('verifyTokenRoute returns Boom error if jwt is an expired token', async t => {
+test('verifyTokenRoute returns Boom error if jwt is an expired token', async (t) => {
   const invalidToken =
     await signJWT({ algorithm: 'HS256', expiresIn: '1ms' }, 'jwt-secret', payload);
 
@@ -76,7 +76,7 @@ test('verifyTokenRoute returns Boom error if jwt is an expired token', async t =
 });
 
 // eslint-disable-next-line max-len
-test('verifyTokenRoute - jwtOptions can be undefined (defaults to { algorithm: "HS256" })', async t => {
+test('verifyTokenRoute - jwtOptions can be undefined (defaults to { algorithm: "HS256" })', async (t) => {
   const validToken =
     await signJWT({ algorithm: 'HS256' }, 'jwt-secret', payload);
 

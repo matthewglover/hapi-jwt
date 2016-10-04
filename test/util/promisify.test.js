@@ -11,11 +11,11 @@ const cbFn = (a, cb) =>
 // pFn :: any -> Promise 10 Error
 const pFn = promisify(cbFn);
 
-test('promisify returns a Promise resolving to success value', async t => {
+test('promisify returns a Promise resolving to success value', async (t) => {
   t.is(await pFn(10), 10);
 });
 
-test('promisify returns a Promise rejecting with an error', async t => {
+test('promisify returns a Promise rejecting with an error', async (t) => {
   const err = await t.throws(pFn(9));
   t.regex(err.message, /Arg should be 10/);
 });

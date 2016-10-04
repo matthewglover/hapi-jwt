@@ -27,7 +27,7 @@ const tokenOptions = {
   jwtSecret: 'jwt-secret',
 };
 
-test('createTokenRoute creates a jwt and redirects to issueTokenPath', async t => {
+test('createTokenRoute creates a jwt and redirects to issueTokenPath', async (t) => {
   const expectedToken =
     await signJWT(tokenOptions.jwtOptions, 'jwt-secret', dummyData);
 
@@ -43,7 +43,7 @@ test('createTokenRoute creates a jwt and redirects to issueTokenPath', async t =
 });
 
 // eslint-disable-next-line max-len
-test('createTokenRoute - jwtOptions can be undefined (defaults to { algorithm: "HS256" })', async t => {
+test('createTokenRoute - jwtOptions can be undefined (defaults to { algorithm: "HS256" })', async (t) => {
   const expectedToken =
     await signJWT(tokenOptions.jwtOptions, 'jwt-secret', dummyData);
 

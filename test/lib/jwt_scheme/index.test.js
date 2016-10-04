@@ -10,7 +10,7 @@ const testServer = (routes, opts) =>
   createServer()
   .then(provisionInjectPromise)
   .then(setConnection())
-  .then(server => {
+  .then((server) => {
     server.auth.scheme('jwtScheme', jwtScheme);
     server.auth.strategy(opts.strategyName || 'jwt', 'jwtScheme', opts);
     return server;
@@ -42,7 +42,7 @@ const failingCredentialsOptions =
 
 const testCredentials = { name: 'matt' };
 
-test('jwtScheme allows access if valid token provided', async t => {
+test('jwtScheme allows access if valid token provided', async (t) => {
   const validToken =
     await signJWT({ algorithm: 'HS256' }, 'my-secret', testCredentials);
 
@@ -54,7 +54,7 @@ test('jwtScheme allows access if valid token provided', async t => {
   t.deepEqual(omit('iat', reply.result), testCredentials);
 });
 
-test('jwtScheme blocks access if invalid token provided', async t => {
+test('jwtScheme blocks access if invalid token provided', async (t) => {
   const invalidToken =
     await signJWT({ algorithm: 'HS256' }, 'invalid-secret', testCredentials);
 
@@ -66,7 +66,7 @@ test('jwtScheme blocks access if invalid token provided', async t => {
   t.regex(reply.result.message, /invalid signature/);
 });
 
-test('jwtScheme blocks access if no token provided', async t => {
+test('jwtScheme blocks access if no token provided', async (t) => {
   const headers = {};
   const server = await testServer([testRoute], testOptions);
   const reply = await server.injectPromise({ method: 'GET', url: '/test', headers });
@@ -75,7 +75,7 @@ test('jwtScheme blocks access if no token provided', async t => {
   t.regex(reply.result.message, /Property authorization not found on object/);
 });
 
-test('jwtScheme blocks access if credentials fail jwt validation', async t => {
+test('jwtScheme blocks access if credentials fail jwt validation', async (t) => {
   const validToken =
     await signJWT({ algorithm: 'HS256' }, 'my-secret', testCredentials);
 
@@ -88,7 +88,7 @@ test('jwtScheme blocks access if credentials fail jwt validation', async t => {
 });
 
 // eslint-disable-next-line max-len
-test('jwtScheme blocks access if credentials pass jwt validation but fail custom validation via Promise rejection', async t => {
+test('jwtScheme blocks access if credentials pass jwt validation but fail custom validation via Promise rejection', async (t) => {
   const validToken =
     await signJWT({ algorithm: 'HS256' }, 'my-secret', testCredentials);
 
@@ -104,7 +104,7 @@ test('jwtScheme blocks access if credentials pass jwt validation but fail custom
 });
 
 // eslint-disable-next-line max-len
-test('jwtScheme blocks access if credentials pass jwt validation but fail custom validation via thrown error', async t => {
+test('jwtScheme blocks access if credentials pass jwt validation but fail custom validation via thrown error', async (t) => {
   const validToken =
     await signJWT({ algorithm: 'HS256' }, 'my-secret', testCredentials);
 
