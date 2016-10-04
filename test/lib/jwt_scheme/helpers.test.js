@@ -8,7 +8,7 @@ test('extractAuthHeaderFromRequest gets value of req.headers.authorization', asy
   t.is(await extractAuthHeaderFromRequest(req), 'Bearer my-token');
 });
 
-test('extractAuthHeaderFromRequest gets value of req.headers.authorization', async t => {
+test('extractAuthHeaderFromRequest throws error if req.headers.authorization not set', async t => {
   const req = { headers: {} };
   t.throws(extractAuthHeaderFromRequest(req));
 });
