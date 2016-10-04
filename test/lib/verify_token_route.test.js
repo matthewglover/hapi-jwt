@@ -22,7 +22,7 @@ const payload = {
 
 const tokenOptions = {
   verifyTokenPath: '/verify-token',
-  jwtVerificationOptions: { algorithm: 'HS256' },
+  jwtOptions: { algorithm: 'HS256' },
   jwtSecret: 'jwt-secret',
 };
 
@@ -76,11 +76,11 @@ test('verifyTokenRoute returns Boom error if jwt is an expired token', async t =
 });
 
 // eslint-disable-next-line max-len
-test('verifyTokenRoute - jwtVerificationOptions can be undefined (defaults to { algorithm: "HS256" })', async t => {
+test('verifyTokenRoute - jwtOptions can be undefined (defaults to { algorithm: "HS256" })', async t => {
   const validToken =
     await signJWT({ algorithm: 'HS256' }, 'jwt-secret', payload);
 
-  const tokenRoute = verifyTokenRoute(omit('jwtVerificationOptions', tokenOptions));
+  const tokenRoute = verifyTokenRoute(omit('jwtOptions', tokenOptions));
   const server = await testServer([tokenRoute]);
   const reply =
     await server.injectPromise({

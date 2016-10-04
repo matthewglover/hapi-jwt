@@ -1,5 +1,5 @@
 import test from 'ava';
-import { omit } from 'ramda';
+import { omit, merge } from 'ramda';
 import { createServer, setConnection, addRoutes } from '@matthewglover/hapi-wrapper';
 import provisionInjectPromise from '../../../test_helpers/provision_inject_promise';
 import signJWT from '../../../util/sign_jwt';
@@ -31,7 +31,7 @@ const testRoute = {
 const testOptions = {
   verificationOptions: { algorithm: 'HS256' },
   jwtSecret: 'my-secret',
-  validateCredentials: (credentials) => Promise.resolve(credentials),
+  validateCredentials: credentials => Promise.resolve(credentials),
 };
 
 const failingCredentialsOptions =
@@ -75,7 +75,7 @@ test('jwtScheme blocks access if no token provided', async t => {
   t.regex(reply.result.message, /Property authorization not found on object/);
 });
 
-test('jwtScheme blocks access if credentials fail validation', async t => {
+test('jwtScheme blocks access if credentials fail jwt validation', async t => {
   const validToken =
     await signJWT({ algorithm: 'HS256' }, 'my-secret', testCredentials);
 
@@ -85,4 +85,36 @@ test('jwtScheme blocks access if credentials fail validation', async t => {
 
   t.is(reply.statusCode, 400);
   t.regex(reply.result.message, /Invalid credentials/);
+});
+
+// eslint-disable-next-line max-len
+test('jwtScheme blocks access if credentials pass jwt validation but fail custom validation via Promise rejection', async t => {
+  const validToken =
+    await signJWT({ algorithm: 'HS256' }, 'my-secret', testCredentials);
+
+  const invalidateCredentials = () => Promise.reject(new Error('Invalid options'));
+  const invalidOptions = merge(testOptions, { validateCredentials: invalidateCredentials });
+
+  const headers = { Authorization: `Bearer ${validToken}` };
+  const server = await testServer([testRoute], invalidOptions);
+  const reply = await server.injectPromise({ method: 'GET', url: '/test', headers });
+
+  t.is(reply.statusCode, 400);
+  t.regex(reply.result.message, /Invalid options/);
+});
+
+// eslint-disable-next-line max-len
+test('jwtScheme blocks access if credentials pass jwt validation but fail custom validation via thrown error', async t => {
+  const validToken =
+    await signJWT({ algorithm: 'HS256' }, 'my-secret', testCredentials);
+
+  const invalidateCredentials = () => { throw new Error('Invalid options'); };
+  const invalidOptions = merge(testOptions, { validateCredentials: invalidateCredentials });
+
+  const headers = { Authorization: `Bearer ${validToken}` };
+  const server = await testServer([testRoute], invalidOptions);
+  const reply = await server.injectPromise({ method: 'GET', url: '/test', headers });
+
+  t.is(reply.statusCode, 400);
+  t.regex(reply.result.message, /Invalid options/);
 });
