@@ -1,8 +1,7 @@
 require('env2')('./config.env');
 const hapiJwt = require('../');
 
-const validateCredentials = (token) => {
-  console.log('token:', token);
+const validateCredentials = () => {
   throw new Error('bummer');
 };
 
