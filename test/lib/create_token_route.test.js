@@ -27,6 +27,7 @@ const tokenOptions = {
   jwtSecret: 'jwt-secret',
 };
 
+// eslint-disable-next-line max-len
 test('createTokenRoute creates a jwt and redirects to issueTokenPath', async (t) => {
   const expectedToken =
     await signJWT(tokenOptions.jwtOptions, 'jwt-secret', dummyData);

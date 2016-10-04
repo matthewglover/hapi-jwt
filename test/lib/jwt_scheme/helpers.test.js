@@ -8,6 +8,7 @@ test('extractAuthHeaderFromRequest gets value of req.headers.authorization', asy
   t.is(await extractAuthHeaderFromRequest(req), 'Bearer my-token');
 });
 
+// eslint-disable-next-line max-len
 test('extractAuthHeaderFromRequest throws error if req.headers.authorization not set', async (t) => {
   const req = { headers: {} };
   t.throws(extractAuthHeaderFromRequest(req));
