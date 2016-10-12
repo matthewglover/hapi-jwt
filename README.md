@@ -9,7 +9,7 @@ A hapi authentication plugin using Json Web Tokens.
 To create a simple way to add web token authentication to routes, and to learn more about JWTs, Hapi plugins, auth schemes and strategies.
 
 ## How
-To install, run npm install --save @matthewglover/hapi-jwt.
+To install, run `npm install --save @matthewglover/hapi-jwt`.
 
 A simple implementation:
 
@@ -20,6 +20,7 @@ const hapiJwt = require('@matthewglover/hapi-jwt');
 
 const options = {
   strategyName: 'jwt',                            // Name of strategy (defaults to jwt)
+  authMode: false,                                // Strategy auth mode (options as per mode in server.auth.strategy)
   createTokenPath: '/create-token',               // Path for token creation
   prepareTokenData: req => req.query,             // Function to prepare token payload data
   issueTokenPath: '/issue-token',                 // Path which will issue token (as /issue-token.html?jwt=[token])
@@ -53,6 +54,7 @@ The only required option properties are:
 The following params are optional:
 
 - `strategyName` - (default `jwt`) the name associated with your strategy
+- `authMode` - (default `false`) the authentication mode (possible values are the same as server.auth.strategy mode options - `true`, `false`, `'required'`, `'optional'`, `'try'`)
 - `createTokenPath` - (default `/create-token`) the path which will create the token
 - `prepareTokenData` - (default `req => req.query`) a function to prepare any data before being encoded (recieves the Hapi request object)
 - `verifyTokenPath` - (default `/verify-token`) a path which will verify the token (expects token to be passed as jwt=[token])
