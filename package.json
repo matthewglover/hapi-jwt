@@ -1,6 +1,6 @@
 {
   "name": "@matthewglover/hapi-jwt",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "## What A hapi authentication plugin using Json Web Tokens.",
   "main": "index.js",
   "scripts": {
